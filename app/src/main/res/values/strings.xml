@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="home_page">Ana Sayfa</string>
+    <string name="popular_movies">Popüler Filmler</string>
+    <string name="my_fav">Favorilerim</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
