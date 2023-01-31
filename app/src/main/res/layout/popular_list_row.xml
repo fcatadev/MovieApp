@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -43,7 +43,7 @@
                 android:layout_marginStart="25dp"
                 android:text="Movie Name"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/rateImg"
                 app:layout_constraintStart_toEndOf="@+id/popularMoviesListRowImg"
@@ -66,6 +66,7 @@
                 android:text="0.0"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:textSize="12sp"
                 android:layout_marginLeft="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rateImg"

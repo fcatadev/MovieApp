@@ -6,7 +6,7 @@ data class Movies(
 
     val movieOverview: String,
 
-    val movieRate: Int?,
+    val movieRate: Float?,
 
     val movieImage: String?
 )
