@@ -1,4 +1,4 @@
-package com.fcadev.movieapp
+package com.fcadev.movieapp.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import com.fcadev.movieapp.R
 
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
@@ -26,7 +27,7 @@ class SplashScreen : AppCompatActivity() {
         )
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

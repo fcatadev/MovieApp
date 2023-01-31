@@ -1,10 +1,11 @@
-package com.fcadev.movieapp
+package com.fcadev.movieapp.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.fcadev.movieapp.R
 
 class HomeFragment : Fragment() {
 
