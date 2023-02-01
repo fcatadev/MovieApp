@@ -6,7 +6,11 @@ data class Movies(
 
     val movieOverview: String,
 
+    val movieDate: String?,
+
     val movieRate: Float?,
+
+    val movieVote: Int?,
 
     val movieImage: String?
 )

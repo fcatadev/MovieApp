@@ -1,10 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.fcadev.movieapp"
@@ -35,6 +36,7 @@ android {
 }
 
 dependencies {
+
     def lifeCycleExtensionVersion = '1.1.1'
     def retrofitVersion = '2.9.0'
     def glideVersion = '4.9.0'
@@ -63,4 +65,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     implementation "androidx.preference:preference:$preferencesVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 }
