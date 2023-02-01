@@ -1,6 +1,8 @@
 package com.fcadev.movieapp.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,11 +50,14 @@ class PopularMoviesFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(PopularMoviesViewModel::class.java)
         viewModel.refreshData()
 
-        binding.popularMovieList.layoutManager = LinearLayoutManager(context)
         binding.popularMovieList.adapter = movieAdapter
+        binding.popularMovieList.layoutManager = LinearLayoutManager(context)
+
+        movieAdapter.onItemClick = { movies ->
+            Log.d("item onClick", movies.release_date.toString())
+        }
 
         observeLiveData()
-
     }
 
     private fun observeLiveData(){

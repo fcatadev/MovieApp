@@ -36,23 +36,24 @@ class MovieDetailFragment : Fragment() {
         }
          */
 
-        viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
-        viewModel.getDataFromApi()
+        //viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
+        //viewModel.getDataFromApi()
 
-        observeLiveData()
+        //observeLiveData()
     }
 
-    private fun observeLiveData (){
+    /*private fun observeLiveData (){
         viewModel.movieLiveData.observe(viewLifecycleOwner, Observer { movie ->
             movie?.let {
-                binding.movieName.text = movie.movieName
+
+                *//*binding.movieName.text = movie.movieName
                 binding.ratingBar.rating = movie.movieRate!!
                 binding.intergerRate.text = movie.movieRate.toString()
                 binding.voteCount.text = movie.movieVote.toString()
                 binding.movieDate.text = movie.movieDate
-                binding.movieOverViewBody.text = movie.movieOverview
+                binding.movieOverViewBody.text = movie.movieOverview*//*
             }
         })
-    }
+    }*/
 
 }

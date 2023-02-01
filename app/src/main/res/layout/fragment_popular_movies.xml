@@ -29,10 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Haftanın Popüler Film ve Dizileri"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/popularMovieList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
