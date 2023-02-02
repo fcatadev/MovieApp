@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FragmentHomeBinding
 
@@ -13,7 +15,6 @@ class HomeFragment : Fragment() {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,18 +24,22 @@ class HomeFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        /*
         binding.goHomeToPopBtn.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToPopularMoviesFragment()
-            Navigation.findNavController(it).navigate(action)
+            findNavController().navigate(action)
         }
 
         binding.goHomeToFavBtn.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToFavoriteMoviesFragment()
             Navigation.findNavController(it).navigate(action)
         }
+         */
 
     }
 

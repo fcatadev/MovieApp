@@ -37,6 +37,7 @@ class PopularMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /*
         binding.goPopToHomeBtn.setOnClickListener {
             val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToHomeFragment()
             Navigation.findNavController(it).navigate(action)
@@ -46,6 +47,7 @@ class PopularMoviesFragment : Fragment() {
             val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToFavoriteMoviesFragment()
             Navigation.findNavController(it).navigate(action)
         }
+         */
 
         viewModel = ViewModelProvider(this).get(PopularMoviesViewModel::class.java)
         viewModel.refreshData()

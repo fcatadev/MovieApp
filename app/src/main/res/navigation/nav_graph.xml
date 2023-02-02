@@ -9,25 +9,12 @@
         android:id="@+id/homeFragment"
         android:name="com.fcadev.movieapp.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_favoriteMoviesFragment"
-            app:destination="@id/favoriteMoviesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/popularMoviesFragment"
         android:name="com.fcadev.movieapp.view.PopularMoviesFragment"
         android:label="fragment_popular_movies"
         tools:layout="@layout/fragment_popular_movies" >
-        <action
-            android:id="@+id/action_popularMoviesFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_popularMoviesFragment_to_favoriteMoviesFragment"
-            app:destination="@id/favoriteMoviesFragment" />
         <action
             android:id="@+id/action_popularMoviesFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -36,14 +23,7 @@
         android:id="@+id/favoriteMoviesFragment"
         android:name="com.fcadev.movieapp.view.FavoriteMoviesFragment"
         android:label="fragment_favorite_movies"
-        tools:layout="@layout/fragment_favorite_movies" >
-        <action
-            android:id="@+id/action_favoriteMoviesFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
-        <action
-            android:id="@+id/action_favoriteMoviesFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite_movies" />
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.fcadev.movieapp.view.MovieDetailFragment"

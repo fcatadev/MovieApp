@@ -3,12 +3,17 @@ package com.fcadev.movieapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fcadev.movieapp.databinding.PopularListRowBinding
 import com.fcadev.movieapp.model.trending.Result
+import com.fcadev.movieapp.view.MainActivity
 import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
+
+//import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
 
 class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) -> Unit)? = null) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -41,11 +46,16 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
             holder.binding.rateText.text = movieList[position].vote_average.toString()
         }
 
+
         holder.binding.popularMovieCard.setOnClickListener {
-            val action =
-                PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
-            Navigation.findNavController(it).navigate(action)
+            val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
+                //PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
+            //Navigation.findNavController(it).navigate(action)
+            findNavController(it).navigate(action)
         }
+
+
+
 
     }
 
