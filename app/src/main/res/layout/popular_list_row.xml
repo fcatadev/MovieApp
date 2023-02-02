@@ -24,18 +24,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageView
                 android:id="@+id/popularMoviesListRowImg"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity=""
-                android:layout_margin="10dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/movieapplogo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/popularMoviesListRowText"

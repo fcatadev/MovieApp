@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fcadev.movieapp.databinding.PopularListRowBinding
 import com.fcadev.movieapp.model.trending.Result
 import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
@@ -25,9 +26,12 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val imageUrl = BASE_IMG_URL + movieList[position].poster_path
+        val imageUrl = BASE_IMG_URL + movieList[position].backdrop_path
         Glide.with(holder.binding.root.context).load(imageUrl)
+            .centerCrop()
             .into(holder.binding.popularMoviesListRowImg)
+
+        //.apply(RequestOptions().override(100,100))
 
         if (movieList[position].original_name != null) { // dizi
             holder.binding.popularMoviesListRowText.text = movieList[position].original_name
