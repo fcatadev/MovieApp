@@ -50,8 +50,8 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
         holder.binding.popularMovieCard.setOnClickListener {
             val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
                 //PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
-            //Navigation.findNavController(it).navigate(action)
             findNavController(it).navigate(action)
+            //Navigation.findNavController(it).navigate(action)
         }
 
 
