@@ -16,18 +16,15 @@ import java.math.RoundingMode
 
 //import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
 
-class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) -> Unit)? = null) :
-    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val movieList: ArrayList<Result>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
-    class MovieViewHolder(var binding: PopularListRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(var binding: PopularListRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val binding =
-            PopularListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = PopularListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(binding)
     }
 
@@ -39,8 +36,6 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
 
         //.apply(RequestOptions().override(100,100))
 
-        //((movieList[position].vote_average * 100.0).roundToInt() / 100.0)
-
         val roundedVoteAverage = movieList[position].vote_average!!.toBigDecimal().setScale(1, RoundingMode.HALF_DOWN).toDouble()
 
         if (movieList[position].original_name != null) { // dizi
@@ -50,7 +45,6 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
             holder.binding.popularMoviesListRowText.text = movieList[position].original_title
             holder.binding.rateText.text = roundedVoteAverage.toString()
         }
-
 
         holder.binding.popularMovieCard.setOnClickListener {
             val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()

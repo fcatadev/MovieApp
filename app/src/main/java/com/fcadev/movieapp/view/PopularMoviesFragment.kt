@@ -1,15 +1,12 @@
 package com.fcadev.movieapp.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fcadev.movieapp.adapter.MovieAdapter
 import com.fcadev.movieapp.databinding.FragmentPopularMoviesBinding
@@ -55,8 +52,20 @@ class PopularMoviesFragment : Fragment() {
         binding.popularMovieList.adapter = movieAdapter
         binding.popularMovieList.layoutManager = LinearLayoutManager(context)
 
-        movieAdapter.onItemClick = { movies ->
-            Log.d("item onClick", movies.release_date.toString())
+
+
+        /*
+        movieAdapter.onItemClicked = { movies ->
+            println("Selected Movie IMDB: " + movies.vote_average)
+        }
+         */
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.popularMovieList.visibility = View.GONE
+            binding.popularPageErrorText.visibility = View.GONE
+            binding.popularPageProgressBar.visibility = View.VISIBLE
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.refreshData()
         }
 
         observeLiveData()
@@ -73,9 +82,9 @@ class PopularMoviesFragment : Fragment() {
         viewModel.movieError.observe(viewLifecycleOwner, Observer { error ->
             error?.let {
                 if (it){
-                    binding.poplarPageErrorText.visibility = View.VISIBLE
+                    binding.popularPageErrorText.visibility = View.VISIBLE
                 }else{
-                    binding.poplarPageErrorText.visibility = View.GONE
+                    binding.popularPageErrorText.visibility = View.GONE
                 }
             }
         })
@@ -84,7 +93,7 @@ class PopularMoviesFragment : Fragment() {
             loading?.let {
                 if (it){
                     binding.popularPageProgressBar.visibility = View.VISIBLE
-                    binding.poplarPageErrorText.visibility = View.GONE
+                    binding.popularPageErrorText.visibility = View.GONE
                     binding.popularMovieList.visibility = View.GONE
                 }else {
                     binding.popularPageProgressBar.visibility = View.GONE
