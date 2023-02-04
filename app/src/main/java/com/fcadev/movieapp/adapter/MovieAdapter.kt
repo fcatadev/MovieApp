@@ -12,6 +12,7 @@ import com.fcadev.movieapp.databinding.PopularListRowBinding
 import com.fcadev.movieapp.model.trending.Result
 import com.fcadev.movieapp.view.MainActivity
 import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
+import java.math.RoundingMode
 
 //import com.fcadev.movieapp.view.PopularMoviesFragmentDirections
 
@@ -38,12 +39,16 @@ class MovieAdapter(val movieList: ArrayList<Result>, var onItemClick: ((Result) 
 
         //.apply(RequestOptions().override(100,100))
 
+        //((movieList[position].vote_average * 100.0).roundToInt() / 100.0)
+
+        val roundedVoteAverage = movieList[position].vote_average!!.toBigDecimal().setScale(1, RoundingMode.HALF_DOWN).toDouble()
+
         if (movieList[position].original_name != null) { // dizi
             holder.binding.popularMoviesListRowText.text = movieList[position].original_name
-            holder.binding.rateText.text = movieList[position].vote_average.toString()
+            holder.binding.rateText.text = roundedVoteAverage.toString()
         } else if (movieList[position].original_title != null) {
             holder.binding.popularMoviesListRowText.text = movieList[position].original_title
-            holder.binding.rateText.text = movieList[position].vote_average.toString()
+            holder.binding.rateText.text = roundedVoteAverage.toString()
         }
 
 
