@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FragmentMovieDetailBinding
 import com.fcadev.movieapp.viewmodel.MovieDetailViewModel
@@ -43,6 +44,9 @@ class MovieDetailFragment : Fragment() {
         getMovieDetails()
     }
 
+
+    //.centerCrop()
+    //                .into(binding.movieDetailImage)
     private fun getMovieDetails() {
         val bundle = arguments
         if (bundle != null) {
@@ -52,6 +56,7 @@ class MovieDetailFragment : Fragment() {
             Glide.with(requireContext()).load(imageUrl)
                 .centerCrop()
                 .into(binding.movieDetailImage)
+
             if (args.originalTitle != null) {
                 binding.movieName.text =  args.originalTitle.toString()
             }else if (args.originalName != null){
