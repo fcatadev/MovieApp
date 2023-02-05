@@ -1,9 +1,13 @@
 package com.fcadev.movieapp.adapter
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.TopRatedTvShowsRowBinding
 import com.fcadev.movieapp.model.topratedtvshows.TopRatedTvShowsResult
 
@@ -30,6 +34,17 @@ class TopRatedTvShowsAdapter(private val topRatedTvShowsList: ArrayList<TopRated
         holder.binding.topRatedTvShowsName.text = topRatedTvShowsList[position].name
         holder.binding.topRatedTvShowsDate.text = topRatedTvShowsList[position].first_air_date
         holder.binding.topRatedTvShowsRateText.text = topRatedTvShowsList[position].vote_average.toString()
+
+        holder.binding.topRatedTvShowsCardLayout.setOnClickListener {
+            AlertDialog.Builder(holder.binding.root.context)
+                .setView(R.layout.custom_detail_dialog)
+                .setMessage("Do you want to exit ?")
+                .setCancelable(true)
+                .setNegativeButton("No"){dialogInterface,it ->
+                    dialogInterface.cancel()
+                }
+                .show()
+        }
 
     }
 
