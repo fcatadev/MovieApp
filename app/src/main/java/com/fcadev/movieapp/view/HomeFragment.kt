@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fcadev.movieapp.R
 import com.fcadev.movieapp.adapter.NowPlayingMovieAdapter
+import com.fcadev.movieapp.adapter.TopRatedTvShowsAdapter
 import com.fcadev.movieapp.databinding.FragmentHomeBinding
 import com.fcadev.movieapp.viewmodel.HomeViewModel
 
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private val nowPlayingMovieAdapter = NowPlayingMovieAdapter(arrayListOf())
+    private val topRatedTvShowsAdapter = TopRatedTvShowsAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +42,13 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel.downloadData()
+        viewModel.downloadTopRatedData()
 
         binding.nowPlayingRecyclerView.adapter = nowPlayingMovieAdapter
         binding.nowPlayingRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+        binding.topRatedTvShowsRecyclerView.adapter = topRatedTvShowsAdapter
+        binding.topRatedTvShowsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
         observeLiveData()
     }
@@ -52,6 +58,13 @@ class HomeFragment : Fragment() {
             nowPlayingMovies?.let {
                 binding.nowPlayingRecyclerView.visibility = View.VISIBLE
                 nowPlayingMovieAdapter.updateNowPlayingMovieList(nowPlayingMovies)
+            }
+        })
+
+        viewModel.topRatedTvShows.observe(viewLifecycleOwner, Observer { topRatedTvShows ->
+            topRatedTvShows?.let {
+                binding.topRatedTvShowsRecyclerView.visibility = View.VISIBLE
+                topRatedTvShowsAdapter.updateTopRatedTvShowsList(topRatedTvShows)
             }
         })
 

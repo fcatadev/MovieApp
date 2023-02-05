@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/nowPlayingMovieCard"
+        android:id="@+id/topRatedTvShowsCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/nowPlayingMovieImage"
+                android:id="@+id/topRatedTvShowsImage"
                 android:layout_width="150dp"
                 android:layout_height="220dp"
                 android:src="@drawable/movieapplogo"
@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/nowPlayingMovieName"
+                android:id="@+id/topRatedTvShowsName"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -45,10 +45,10 @@
                 android:textSize="13dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieImage" />
+                app:layout_constraintTop_toBottomOf="@+id/topRatedTvShowsImage" />
 
             <TextView
-                android:id="@+id/nowPlayingMovieDate"
+                android:id="@+id/topRatedTvShowsDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -58,10 +58,10 @@
                 android:textSize="10dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieName" />
+                app:layout_constraintTop_toBottomOf="@+id/topRatedTvShowsName" />
 
             <ImageView
-                android:id="@+id/nowPlayingMovieRateImage"
+                android:id="@+id/topRatedTvShowsRateImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -69,12 +69,12 @@
                 android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieDate"
+                app:layout_constraintTop_toBottomOf="@+id/topRatedTvShowsDate"
                 app:srcCompat="@drawable/ic_baseline_star_24"
                 app:tint="#FBCD00" />
 
             <TextView
-                android:id="@+id/nowPlayingMovieRateText"
+                android:id="@+id/topRatedTvShowsRateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -82,9 +82,9 @@
                 android:textColor="@color/black"
                 android:textSize="10dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/nowPlayingMovieRateImage"
-                app:layout_constraintStart_toEndOf="@+id/nowPlayingMovieRateImage"
-                app:layout_constraintTop_toTopOf="@+id/nowPlayingMovieRateImage" />
+                app:layout_constraintBottom_toBottomOf="@+id/topRatedTvShowsRateImage"
+                app:layout_constraintStart_toEndOf="@+id/topRatedTvShowsRateImage"
+                app:layout_constraintTop_toTopOf="@+id/topRatedTvShowsRateImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
