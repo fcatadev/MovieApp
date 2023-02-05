@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fcadev.movieapp.model.trending.Result
 import com.fcadev.movieapp.model.trending.TrendingMovies
-import com.fcadev.movieapp.service.MovieAPIService
+import com.fcadev.movieapp.service.getPopularData.MovieAPIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver

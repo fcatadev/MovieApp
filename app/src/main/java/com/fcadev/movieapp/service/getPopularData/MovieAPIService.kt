@@ -1,4 +1,4 @@
-package com.fcadev.movieapp.service
+package com.fcadev.movieapp.service.getPopularData
 
 import com.fcadev.movieapp.model.trending.TrendingMovies
 import io.reactivex.Single

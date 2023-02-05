@@ -5,16 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fcadev.movieapp.R
+import com.fcadev.movieapp.adapter.NowPlayingMovieAdapter
 import com.fcadev.movieapp.databinding.FragmentHomeBinding
+import com.fcadev.movieapp.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: HomeViewModel
+    private val nowPlayingMovieAdapter = NowPlayingMovieAdapter(arrayListOf())
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,18 +38,44 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel.downloadData()
 
-        /*
-        binding.goHomeToPopBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToPopularMoviesFragment()
-            findNavController().navigate(action)
-        }
+        binding.nowPlayingRecyclerView.adapter = nowPlayingMovieAdapter
+        binding.nowPlayingRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
-        binding.goHomeToFavBtn.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToFavoriteMoviesFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-         */
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner, Observer { nowPlayingMovies ->
+            nowPlayingMovies?.let {
+                binding.nowPlayingRecyclerView.visibility = View.VISIBLE
+                nowPlayingMovieAdapter.updateNowPlayingMovieList(nowPlayingMovies)
+            }
+        })
+
+        viewModel.nowPlayingMovieError.observe(viewLifecycleOwner, Observer { nowPlayingMoviesErrors ->
+            nowPlayingMoviesErrors?.let {
+                if (it){
+                    binding.nowPlayingPageErrorText.visibility = View.VISIBLE
+                }else {
+                    binding.nowPlayingPageErrorText.visibility = View.GONE
+                }
+            }
+        })
+
+        viewModel.nowPlayingMovieLoading.observe(viewLifecycleOwner, Observer { nowPlayingMoviesLoading ->
+            nowPlayingMoviesLoading?.let {
+                if (it){
+                    binding.nowPlayingPageProgressBar.visibility = View.VISIBLE
+                    binding.nowPlayingPageErrorText.visibility = View.GONE
+                    binding.nowPlayingRecyclerView.visibility = View.GONE
+                }else {
+                    binding.nowPlayingPageProgressBar.visibility = View.GONE
+                }
+            }
+        })
 
     }
 

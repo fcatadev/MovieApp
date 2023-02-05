@@ -24,9 +24,6 @@ class PopularMoviesFragment : Fragment() {
 
     private lateinit var viewModel: PopularMoviesViewModel
     private val movieAdapter = MovieAdapter(arrayListOf())
-    //private lateinit var recyclerView: RecyclerView
-    //private lateinit var movieList: ArrayList<Result>
-    //private lateinit var movieAdapter : MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,29 +39,11 @@ class PopularMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*
-        binding.goPopToHomeBtn.setOnClickListener {
-            val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToHomeFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
-        binding.goPopToFavBtn.setOnClickListener {
-            val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToFavoriteMoviesFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-         */
-
         viewModel = ViewModelProvider(this).get(PopularMoviesViewModel::class.java)
         viewModel.refreshData()
 
-        //recyclerView = binding.popularMovieList
-        //recyclerView.setHasFixedSize(true)
-        //recyclerView.layoutManager = LinearLayoutManager(context)
-
-
         binding.popularMovieList.adapter = movieAdapter
         binding.popularMovieList.layoutManager = LinearLayoutManager(context)
-
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.popularMovieList.visibility = View.GONE
