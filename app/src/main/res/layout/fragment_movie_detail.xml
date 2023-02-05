@@ -24,6 +24,7 @@
             >
 
             <ImageView
+                android:id="@+id/movieDetailImage"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:src="@drawable/movieapplogo" />

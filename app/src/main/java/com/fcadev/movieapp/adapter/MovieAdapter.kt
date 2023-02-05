@@ -2,6 +2,8 @@ package com.fcadev.movieapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -18,8 +20,13 @@ import java.math.RoundingMode
 
 class MovieAdapter(private val movieList: ArrayList<Result>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
+    var onItemClick : ((Result) -> Unit)? = null
 
     class MovieViewHolder(var binding: PopularListRowBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        val popularMoviesListRowImg : ImageView = binding.popularMoviesListRowImg
+        val popularMoviesListRowText: TextView = binding.popularMoviesListRowText
+        val rateText : TextView = binding.rateText
 
     }
 
@@ -47,10 +54,15 @@ class MovieAdapter(private val movieList: ArrayList<Result>) : RecyclerView.Adap
         }
 
         holder.binding.popularMovieCard.setOnClickListener {
+
+            onItemClick?.invoke(movieList[position])
+
+            /*
             val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
                 //PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
             findNavController(it).navigate(action)
             //Navigation.findNavController(it).navigate(action)
+             */
         }
 
 

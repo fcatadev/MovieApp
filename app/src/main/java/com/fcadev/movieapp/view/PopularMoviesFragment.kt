@@ -1,15 +1,20 @@
 package com.fcadev.movieapp.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fcadev.movieapp.adapter.MovieAdapter
 import com.fcadev.movieapp.databinding.FragmentPopularMoviesBinding
+import com.fcadev.movieapp.model.trending.Result
 import com.fcadev.movieapp.viewmodel.PopularMoviesViewModel
 
 class PopularMoviesFragment : Fragment() {
@@ -19,6 +24,9 @@ class PopularMoviesFragment : Fragment() {
 
     private lateinit var viewModel: PopularMoviesViewModel
     private val movieAdapter = MovieAdapter(arrayListOf())
+    //private lateinit var recyclerView: RecyclerView
+    //private lateinit var movieList: ArrayList<Result>
+    //private lateinit var movieAdapter : MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,16 +57,22 @@ class PopularMoviesFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(PopularMoviesViewModel::class.java)
         viewModel.refreshData()
 
+        //recyclerView = binding.popularMovieList
+        //recyclerView.setHasFixedSize(true)
+        //recyclerView.layoutManager = LinearLayoutManager(context)
+
+
         binding.popularMovieList.adapter = movieAdapter
         binding.popularMovieList.layoutManager = LinearLayoutManager(context)
 
+        movieAdapter.onItemClick = {
 
-
-        /*
-        movieAdapter.onItemClicked = { movies ->
-            println("Selected Movie IMDB: " + movies.vote_average)
+            Toast.makeText(context, "IMDB: ${it.vote_average}", Toast.LENGTH_LONG).show()
+            /*
+            val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
+            Navigation.findNavController()
+             */
         }
-         */
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.popularMovieList.visibility = View.GONE
@@ -103,3 +117,4 @@ class PopularMoviesFragment : Fragment() {
     }
 
 }
+

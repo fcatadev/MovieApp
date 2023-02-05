@@ -25,6 +25,7 @@ class MovieDetailFragment : Fragment() {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +41,9 @@ class MovieDetailFragment : Fragment() {
         //viewModel.getDataFromApi()
 
         //observeLiveData()
+
+
+
     }
 
     /*private fun observeLiveData (){
