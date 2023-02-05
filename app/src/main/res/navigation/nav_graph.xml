@@ -14,7 +14,7 @@
         android:id="@+id/popularMoviesFragment"
         android:name="com.fcadev.movieapp.view.PopularMoviesFragment"
         android:label="fragment_popular_movies"
-        tools:layout="@layout/fragment_popular_movies" >
+        tools:layout="@layout/fragment_popular_movies">
         <action
             android:id="@+id/action_popularMoviesFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -28,10 +28,38 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.fcadev.movieapp.view.MovieDetailFragment"
         android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" >
+        tools:layout="@layout/fragment_movie_detail">
         <argument
-            android:name="movieUuid"
+            android:name="posterPath"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="originalTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="originalName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="voteAverage"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="voteCount"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="releaseDate"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="overview"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="firstAirDate"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

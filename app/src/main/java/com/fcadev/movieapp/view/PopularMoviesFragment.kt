@@ -65,14 +65,6 @@ class PopularMoviesFragment : Fragment() {
         binding.popularMovieList.adapter = movieAdapter
         binding.popularMovieList.layoutManager = LinearLayoutManager(context)
 
-        movieAdapter.onItemClick = {
-
-            Toast.makeText(context, "IMDB: ${it.vote_average}", Toast.LENGTH_LONG).show()
-            /*
-            val action = PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailFragment()
-            Navigation.findNavController()
-             */
-        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.popularMovieList.visibility = View.GONE
