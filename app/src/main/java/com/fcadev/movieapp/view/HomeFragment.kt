@@ -17,6 +17,9 @@ import com.fcadev.movieapp.adapter.NowPlayingMovieAdapter
 import com.fcadev.movieapp.adapter.TopRatedTvShowsAdapter
 import com.fcadev.movieapp.databinding.FragmentHomeBinding
 import com.fcadev.movieapp.viewmodel.HomeViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
 
@@ -49,6 +52,20 @@ class HomeFragment : Fragment() {
 
         binding.topRatedTvShowsRecyclerView.adapter = topRatedTvShowsAdapter
         binding.topRatedTvShowsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+        topRatedTvShowsAdapter.onItemClick = {
+            val dialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_detail, null)
+            val btnClose = view.findViewById<FloatingActionButton>(R.id.detailDialogExitButton)
+
+            btnClose.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.setCancelable(true)
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.setContentView(view)
+            dialog.show()
+        }
 
         observeLiveData()
     }
