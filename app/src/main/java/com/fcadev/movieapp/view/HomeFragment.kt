@@ -1,5 +1,6 @@
 package com.fcadev.movieapp.view
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fcadev.movieapp.R
 import com.fcadev.movieapp.adapter.NowPlayingMovieAdapter
+import com.fcadev.movieapp.adapter.TopRatedMoviesAdapter
 import com.fcadev.movieapp.adapter.TopRatedTvShowsAdapter
 import com.fcadev.movieapp.databinding.FragmentHomeBinding
 import com.fcadev.movieapp.viewmodel.HomeViewModel
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private val nowPlayingMovieAdapter = NowPlayingMovieAdapter(arrayListOf())
     private val topRatedTvShowsAdapter = TopRatedTvShowsAdapter(arrayListOf())
+    private val topRatedMoviesAdapter = TopRatedMoviesAdapter(arrayListOf())
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
     override fun onCreateView(
@@ -50,12 +53,16 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel.downloadData()
         viewModel.downloadTopRatedData()
+        viewModel.downloadTopRatedMoviesData()
 
         binding.nowPlayingRecyclerView.adapter = nowPlayingMovieAdapter
         binding.nowPlayingRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
         binding.topRatedTvShowsRecyclerView.adapter = topRatedTvShowsAdapter
         binding.topRatedTvShowsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+        binding.topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
+        binding.topRatedMoviesRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
         topRatedTvShowsAdapter.onItemClick = {
             val dialog = BottomSheetDialog(requireContext())
@@ -109,6 +116,32 @@ class HomeFragment : Fragment() {
             dialog.show()
         }
 
+        topRatedMoviesAdapter.onItemClick = {
+            val dialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_detail, null)
+            val btnClose: ImageView = view.findViewById(R.id.detailDialogExitButton)
+            val detailDialogMovieName: TextView = view.findViewById(R.id.detailDialogMovieName)
+            val detailDialogMovieDate: TextView = view.findViewById(R.id.detailDialogMovieDate)
+            val detailDialogMovieOverview: TextView = view.findViewById(R.id.detailDialogMovieOverview)
+            val detailDialogMovieImage: ImageView = view.findViewById(R.id.detailDialogMovieImage)
+            val imageUrl = BASE_IMG_URL + it.poster_path
+
+            detailDialogMovieName.text = it.title
+            detailDialogMovieDate.text = it.release_date
+            detailDialogMovieOverview.text = it.overview
+            Glide.with(requireContext()).load(imageUrl)
+                .centerCrop()
+                .into(detailDialogMovieImage)
+
+            btnClose.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.setCancelable(true)
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.setContentView(view)
+            dialog.show()
+        }
+
         observeLiveData()
     }
 
@@ -124,6 +157,13 @@ class HomeFragment : Fragment() {
             topRatedTvShows?.let {
                 binding.topRatedTvShowsRecyclerView.visibility = View.VISIBLE
                 topRatedTvShowsAdapter.updateTopRatedTvShowsList(topRatedTvShows)
+            }
+        })
+
+        viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { topRatedMovies ->
+            topRatedMovies?.let {
+                binding.topRatedMoviesRecyclerView.visibility = View.VISIBLE
+                topRatedMoviesAdapter.updateTopRatedMoviesList(topRatedMovies)
             }
         })
 

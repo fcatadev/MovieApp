@@ -4,9 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fcadev.movieapp.model.nowplayingmovies.NowPlayingMovies
 import com.fcadev.movieapp.model.nowplayingmovies.NowPlayingResult
+import com.fcadev.movieapp.model.topratedmovies.TopRatedMovies
+import com.fcadev.movieapp.model.topratedmovies.TopRatedMoviesResult
 import com.fcadev.movieapp.model.topratedtvshows.TopRatedTvShows
 import com.fcadev.movieapp.model.topratedtvshows.TopRatedTvShowsResult
 import com.fcadev.movieapp.service.getNowPlayingData.NowPlayingMovieAPIService
+import com.fcadev.movieapp.service.getTopRatedMoviesData.TopRatedMoviesAPIService
 import com.fcadev.movieapp.service.getTopRatedTvShowsData.TopRatedTvShowsAPIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,9 +20,12 @@ class HomeViewModel : ViewModel() {
 
     private val nowPlayingMovieApiService = NowPlayingMovieAPIService()
     private val topRatedTvShowsApiService = TopRatedTvShowsAPIService()
+    private val topRatedMoviesApiService = TopRatedMoviesAPIService()
     private val disposable = CompositeDisposable()
 
     val topRatedTvShows = MutableLiveData<MutableList<TopRatedTvShowsResult>?>()
+
+    val topRatedMovies = MutableLiveData<MutableList<TopRatedMoviesResult>?>()
 
     val nowPlayingMovies = MutableLiveData<MutableList<NowPlayingResult>?>()
     val nowPlayingMovieError = MutableLiveData<Boolean>()
@@ -31,6 +37,34 @@ class HomeViewModel : ViewModel() {
 
     fun downloadTopRatedData(){
         getTopRatedDataFromAPI()
+    }
+
+    fun downloadTopRatedMoviesData(){
+        getTopRatedMoviesDataFromAPI()
+    }
+
+    private fun getTopRatedMoviesDataFromAPI() {
+        nowPlayingMovieLoading.value = true
+
+        disposable.add(
+            topRatedMoviesApiService.getTopRatedMoviesData()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<TopRatedMovies>(){
+                    override fun onSuccess(t: TopRatedMovies) {
+                        topRatedMovies.value = t.results as MutableList<TopRatedMoviesResult>?
+                        nowPlayingMovieError.value = false
+                        nowPlayingMovieLoading.value = false
+                    }
+
+                    override fun onError(e: Throwable) {
+                        nowPlayingMovieError.value = true
+                        nowPlayingMovieLoading.value = false
+                        e.printStackTrace()
+                    }
+
+                })
+        )
     }
 
     private fun getNowPlayingDataFromAPI() {
