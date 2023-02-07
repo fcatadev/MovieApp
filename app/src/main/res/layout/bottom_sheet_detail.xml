@@ -17,24 +17,23 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <ImageView
                 android:id="@+id/detailDialogExitButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
-                android:contentDescription="@string/home_page"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:src="@drawable/cancel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/detailDialogMovieImage"
-                android:layout_width="150dp"
-                android:layout_height="300dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="100dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/movieapplogo"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +41,12 @@
 
             <TextView
                 android:id="@+id/detailDialogMovieName"
-                android:layout_width="wrap_content"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="Movie Name"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -65,28 +66,38 @@
                 app:layout_constraintStart_toEndOf="@+id/detailDialogMovieImage"
                 app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieName" />
 
-            <TextView
-                android:id="@+id/detailDialogMovieOverview"
-                android:layout_width="233dp"
-                android:layout_height="220dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="243dp"
+                android:layout_height="130dp"
                 app:layout_constraintStart_toEndOf="@+id/detailDialogMovieImage"
-                app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieDate" />
+                app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieDate">
+
+                <TextView
+                    android:id="@+id/detailDialogMovieOverview"
+                    android:layout_width="233dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/detailDialogMovieImage"
+                    app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieDate" />
+
+            </androidx.core.widget.NestedScrollView>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/detailDialogFavoriteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="150dp"
+                android:layout_marginBottom="3dp"
                 android:contentDescription="@string/home_page"
                 android:src="@drawable/ic_baseline_favorite_border_24"
+                app:layout_constraintBottom_toTopOf="@+id/addFavoriteText"
                 app:layout_constraintEnd_toStartOf="@+id/detailDialogSharedButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieImage" />
@@ -95,36 +106,32 @@
                 android:id="@+id/detailDialogSharedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginBottom="3dp"
                 android:contentDescription="@string/my_fav"
                 android:src="@drawable/ic_baseline_share_24"
+                app:layout_constraintBottom_toTopOf="@+id/sharedText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/detailDialogFavoriteButton"
-                app:layout_constraintTop_toBottomOf="@+id/detailDialogMovieImage" />
+                app:layout_constraintStart_toEndOf="@+id/detailDialogFavoriteButton" />
 
             <TextView
                 android:id="@+id/addFavoriteText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
                 android:text="Favorilere Ekle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/detailDialogFavoriteButton"
-                app:layout_constraintStart_toStartOf="@+id/detailDialogFavoriteButton"
-                app:layout_constraintTop_toBottomOf="@+id/detailDialogFavoriteButton" />
+                app:layout_constraintStart_toStartOf="@+id/detailDialogFavoriteButton" />
 
             <TextView
                 android:id="@+id/sharedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
                 android:text="Paylaş"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/detailDialogSharedButton"
-                app:layout_constraintStart_toStartOf="@+id/detailDialogSharedButton"
-                app:layout_constraintTop_toBottomOf="@+id/detailDialogSharedButton" />
+                app:layout_constraintStart_toStartOf="@+id/detailDialogSharedButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
