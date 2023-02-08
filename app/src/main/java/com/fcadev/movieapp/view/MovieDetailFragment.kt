@@ -7,11 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FragmentMovieDetailBinding
+import com.fcadev.movieapp.service.local.FavoriteMovie
+import com.fcadev.movieapp.service.local.FavoriteMovieDao
+import com.fcadev.movieapp.service.local.FavoriteMovieDatabase
 import com.fcadev.movieapp.viewmodel.MovieDetailViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MovieDetailFragment : Fragment() {
 
@@ -19,14 +27,7 @@ class MovieDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: MovieDetailViewModel
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
-
-    private var posterPath: String = ""
-    private var originalTitle: String = ""
-    private var originalName: String = ""
-    private var voteAverage: Float = 0f
-    private var voteCount: Int = 0
-    private var releaseDate: String = ""
-    private var overview: String = ""
+    private lateinit var favoriteMovieDao: FavoriteMovieDao
 
 
     override fun onCreateView(
@@ -41,12 +42,16 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val favoriteMovieDatabase = Room.databaseBuilder(requireContext(), FavoriteMovieDatabase::class.java, "favorite_movie_db")
+            .build()
+        favoriteMovieDao = favoriteMovieDatabase.favoriteMovieDao()
+
         getMovieDetails()
+
+        setupData()
     }
 
-
-    //.centerCrop()
-    //                .into(binding.movieDetailImage)
     private fun getMovieDetails() {
         val bundle = arguments
         if (bundle != null) {
@@ -76,6 +81,31 @@ class MovieDetailFragment : Fragment() {
 
             binding.movieOverViewBody.text = args.overview.toString()
             binding.ratingBar.rating = args.voteAverage
+        }
+    }
+
+    private fun addMovieToFavorites(){
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                val bundle = arguments
+                val args = MovieDetailFragmentArgs.fromBundle(bundle!!)
+
+                val favoriteMovie = FavoriteMovie(
+                    args.id,
+                    args.originalName,
+                    args.originalTitle,
+                    args.posterPath
+                )
+
+                favoriteMovieDao.insert(favoriteMovie)
+
+            }
+        }
+    }
+
+    private fun setupData(){
+        binding.favoriteButton.setOnClickListener {
+            addMovieToFavorites()
         }
     }
 

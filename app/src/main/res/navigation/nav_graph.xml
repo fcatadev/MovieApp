@@ -61,5 +61,9 @@
             android:name="firstAirDate"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

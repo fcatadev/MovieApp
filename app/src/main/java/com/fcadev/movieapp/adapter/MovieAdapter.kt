@@ -70,6 +70,7 @@ class MovieAdapter(private val movieList: ArrayList<Result>) :
             bundle.putString("releaseDate", movieList[position].release_date)
             bundle.putString("firstAirDate", movieList[position].first_air_date)
             bundle.putString("overview", movieList[position].overview)
+            bundle.putInt("id", movieList[position].id!!)
 
             findNavController(it).navigate(R.id.action_popularMoviesFragment_to_movieDetailFragment, bundle)
         }
