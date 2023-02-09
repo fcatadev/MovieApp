@@ -1,12 +1,13 @@
 package com.fcadev.movieapp.view
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.bumptech.glide.Glide
@@ -28,6 +29,8 @@ class MovieDetailFragment : Fragment() {
     private lateinit var viewModel: MovieDetailViewModel
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
     private lateinit var favoriteMovieDao: FavoriteMovieDao
+    //private lateinit var favoriteMovieModel : FavoriteMovie
+
 
 
     override fun onCreateView(
@@ -87,6 +90,7 @@ class MovieDetailFragment : Fragment() {
     private fun addMovieToFavorites(){
         lifecycleScope.launch {
             withContext(Dispatchers.IO){
+
                 val bundle = arguments
                 val args = MovieDetailFragmentArgs.fromBundle(bundle!!)
 
@@ -97,10 +101,26 @@ class MovieDetailFragment : Fragment() {
                     args.posterPath
                 )
 
-                favoriteMovieDao.insert(favoriteMovie)
+                val existingMovie = favoriteMovieDao.getMovieById(favoriteMovie.id)
+                if (existingMovie == null){
+                    favoriteMovieDao.insert(favoriteMovie)
+                    binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    withContext(Dispatchers.Main) {
+                        showToast("İçerik başarıyla favorilerinize eklendi")
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        showToast("Bu içerik zaten favorilerinize ekli")
+                    }
+                }
 
             }
         }
+    }
+
+    private fun showToast(message: String){
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_LONG)
+        toast.show()
     }
 
     private fun setupData(){

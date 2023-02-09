@@ -44,7 +44,7 @@ class FavoriteMoviesFragment : Fragment() {
             .build()
         favoriteMovieDao = favoriteMovieDatabase.favoriteMovieDao()
 
-        favoriteMovieAdapter = FavoriteMovieAdapter(emptyList())
+        favoriteMovieAdapter = FavoriteMovieAdapter(this, emptyList())
         binding.favoriteShowListRecyclerView.adapter = favoriteMovieAdapter
         binding.favoriteShowListRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL,false)
@@ -52,13 +52,12 @@ class FavoriteMoviesFragment : Fragment() {
     }
 
     private fun getAllFavoriteMovies(){
+
         lifecycleScope.launch {
             val favoriteMovies = withContext(Dispatchers.IO) {
                 favoriteMovieDao.getAllFavoriteMovies()
             }
-
-            binding.favoriteShowListRecyclerView.adapter = FavoriteMovieAdapter(favoriteMovies)
-
+            binding.favoriteShowListRecyclerView.adapter = FavoriteMovieAdapter(this@FavoriteMoviesFragment, favoriteMovies)
         }
     }
 

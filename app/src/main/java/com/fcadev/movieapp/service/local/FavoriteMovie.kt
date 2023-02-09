@@ -10,4 +10,6 @@ data class FavoriteMovie (
     val name: String?,
     val title: String?,
     val poster_path: String?
-)
+){
+    companion object{}
+}

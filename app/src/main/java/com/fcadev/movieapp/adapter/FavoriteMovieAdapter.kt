@@ -1,19 +1,27 @@
 package com.fcadev.movieapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.bumptech.glide.Glide
+import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FavoriteShowListRowBinding
 import com.fcadev.movieapp.service.local.FavoriteMovie
+import com.fcadev.movieapp.service.local.FavoriteMovieDatabase
 
-class FavoriteMovieAdapter(private val favoriteMovie: List<FavoriteMovie>):
+class FavoriteMovieAdapter(private var fragment: Fragment, private val favoriteMovie: List<FavoriteMovie>):
     RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>(){
 
+    val context = fragment.requireContext()
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
-    class FavoriteViewHolder(val binding: FavoriteShowListRowBinding) : RecyclerView.ViewHolder(binding.root){
+    class FavoriteViewHolder(var binding: FavoriteShowListRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
@@ -35,9 +43,21 @@ class FavoriteMovieAdapter(private val favoriteMovie: List<FavoriteMovie>):
         }
 
         holder.binding.favoriteMovieName.text = showName
+        holder.binding.notFavButton.setOnClickListener {
+            removeFromFavorites(favoriteMovie[position])
+            Toast.makeText(context, "${showName} favorilerden kaldırıldı", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     override fun getItemCount(): Int {
         return favoriteMovie.size
+    }
+
+    private fun removeFromFavorites(favoriteMovie: FavoriteMovie){
+        val database = Room.databaseBuilder(context, FavoriteMovieDatabase::class.java, "favorite_movies_db").build()
+        val favoriteMovieDao = database.favoriteMovieDao()
+        favoriteMovieDao.delete(favoriteMovie)
+        notifyDataSetChanged()
     }
 }

@@ -19,7 +19,7 @@
             <ImageView
                 android:id="@+id/favoriteMovieImage"
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
+                android:layout_height="235dp"
                 android:src="@drawable/dummymovieposter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
