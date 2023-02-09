@@ -22,6 +22,7 @@ class FavoriteMoviesFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var favoriteMovieDao: FavoriteMovieDao
     private lateinit var favoriteMovieAdapter: FavoriteMovieAdapter
+    private lateinit var favoriteMovieDatabase: FavoriteMovieDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,15 +37,20 @@ class FavoriteMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val favoriteMovieDatabase = Room.databaseBuilder(
+        favoriteMovieDatabase = Room.databaseBuilder(
             requireContext(),
             FavoriteMovieDatabase::class.java,
             "favorite_movie_db"
-        )
-            .build()
+        ).allowMainThreadQueries().build()
         favoriteMovieDao = favoriteMovieDatabase.favoriteMovieDao()
 
-        favoriteMovieAdapter = FavoriteMovieAdapter(this, emptyList())
+
+        favoriteMovieAdapter = FavoriteMovieAdapter(
+            this,
+            emptyList(),
+            favoriteMovieDao = favoriteMovieDao
+        )
+
         binding.favoriteShowListRecyclerView.adapter = favoriteMovieAdapter
         binding.favoriteShowListRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL,false)
@@ -57,7 +63,11 @@ class FavoriteMoviesFragment : Fragment() {
             val favoriteMovies = withContext(Dispatchers.IO) {
                 favoriteMovieDao.getAllFavoriteMovies()
             }
-            binding.favoriteShowListRecyclerView.adapter = FavoriteMovieAdapter(this@FavoriteMoviesFragment, favoriteMovies)
+            binding.favoriteShowListRecyclerView.adapter = FavoriteMovieAdapter(
+                this@FavoriteMoviesFragment,
+                favoriteMovies,
+                favoriteMovieDao = favoriteMovieDao
+            )
         }
     }
 
@@ -65,5 +75,4 @@ class FavoriteMoviesFragment : Fragment() {
         super.onStart()
         getAllFavoriteMovies()
     }
-
 }

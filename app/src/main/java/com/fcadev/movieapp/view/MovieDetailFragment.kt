@@ -29,6 +29,8 @@ class MovieDetailFragment : Fragment() {
     private lateinit var viewModel: MovieDetailViewModel
     private val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
     private lateinit var favoriteMovieDao: FavoriteMovieDao
+    private var existingMovie: FavoriteMovie? = null
+    private lateinit var favoriteMovie: FavoriteMovie
     //private lateinit var favoriteMovieModel : FavoriteMovie
 
 
@@ -47,12 +49,29 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val favoriteMovieDatabase = Room.databaseBuilder(requireContext(), FavoriteMovieDatabase::class.java, "favorite_movie_db")
-            .build()
+            .allowMainThreadQueries().build()
         favoriteMovieDao = favoriteMovieDatabase.favoriteMovieDao()
 
+        initViews()
+        if (favoriteMovieDao.getMovieById(favoriteMovie.id) == null) {
+            binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        } else {
+            binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
         getMovieDetails()
-
         setupData()
+    }
+
+    private fun initViews() {
+        val bundle = arguments
+        val args = MovieDetailFragmentArgs.fromBundle(bundle!!)
+
+        favoriteMovie = FavoriteMovie(
+            args.id,
+            args.originalName,
+            args.originalTitle,
+            args.posterPath
+        )
     }
 
     private fun getMovieDetails() {
@@ -87,33 +106,22 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    private fun addMovieToFavorites(){
+    private fun addMovieToFavorites() {
         lifecycleScope.launch {
-            withContext(Dispatchers.IO){
-
-                val bundle = arguments
-                val args = MovieDetailFragmentArgs.fromBundle(bundle!!)
-
-                val favoriteMovie = FavoriteMovie(
-                    args.id,
-                    args.originalName,
-                    args.originalTitle,
-                    args.posterPath
-                )
-
-                val existingMovie = favoriteMovieDao.getMovieById(favoriteMovie.id)
-                if (existingMovie == null){
+            withContext(Dispatchers.IO) {
+                existingMovie = favoriteMovieDao.getMovieById(favoriteMovie.id)
+                if (existingMovie == null) {
                     favoriteMovieDao.insert(favoriteMovie)
-                    binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
                     withContext(Dispatchers.Main) {
                         showToast("İçerik başarıyla favorilerinize eklendi")
+                        binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         showToast("Bu içerik zaten favorilerinize ekli")
+                        binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
                     }
                 }
-
             }
         }
     }
@@ -128,6 +136,7 @@ class MovieDetailFragment : Fragment() {
             addMovieToFavorites()
         }
     }
+}
 
     /*private fun observeLiveData (){
         viewModel.movieLiveData.observe(viewLifecycleOwner, Observer { movie ->
@@ -142,5 +151,3 @@ class MovieDetailFragment : Fragment() {
             }
         })
     }*/
-
-}

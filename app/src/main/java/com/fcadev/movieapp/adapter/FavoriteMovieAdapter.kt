@@ -1,25 +1,28 @@
 package com.fcadev.movieapp.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.bumptech.glide.Glide
-import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FavoriteShowListRowBinding
 import com.fcadev.movieapp.service.local.FavoriteMovie
+import com.fcadev.movieapp.service.local.FavoriteMovieDao
 import com.fcadev.movieapp.service.local.FavoriteMovieDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FavoriteMovieAdapter(private var fragment: Fragment, private var favoriteMovie: List<FavoriteMovie>):
+class FavoriteMovieAdapter(
+    private var fragment: Fragment,
+    private var favoriteMovieList: List<FavoriteMovie>,
+    private var favoriteMovieDao: FavoriteMovieDao
+) :
     RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>(){
 
     val context = fragment.requireContext()
@@ -35,38 +38,34 @@ class FavoriteMovieAdapter(private var fragment: Fragment, private var favoriteM
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        val imageUrl = BASE_IMG_URL + favoriteMovie[position].poster_path
+        val imageUrl = BASE_IMG_URL + favoriteMovieList[position].poster_path
         Glide.with(holder.binding.root.context).load(imageUrl)
             .centerCrop()
             .into(holder.binding.favoriteMovieImage)
 
-        val showName = if (favoriteMovie[position].name != null){
-            favoriteMovie[position].name
+        val showName = if (favoriteMovieList[position].name != null){
+            favoriteMovieList[position].name
         }else {
-            favoriteMovie[position].title
+            favoriteMovieList[position].title
         }
 
         holder.binding.favoriteMovieName.text = showName
         holder.binding.notFavButton.setOnClickListener {
-            removeFromFavorites(favoriteMovie[position])
-
+            removeFromFavorites(favoriteMovieList[position])
         }
 
     }
 
     override fun getItemCount(): Int {
-        return favoriteMovie.size
+        return favoriteMovieList.size
     }
 
     private fun removeFromFavorites(favoriteMovie: FavoriteMovie){
-        val database = Room.databaseBuilder(context, FavoriteMovieDatabase::class.java, "favorite_movies_db").build()
-        val favoriteMovieDao = database.favoriteMovieDao()
-
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 favoriteMovieDao.delete(favoriteMovie)
                 val updateList = favoriteMovieDao.getAllFavoriteMovies()
-                this@FavoriteMovieAdapter.favoriteMovie = updateList
+                favoriteMovieList = updateList
             }
             notifyDataSetChanged()
         }
