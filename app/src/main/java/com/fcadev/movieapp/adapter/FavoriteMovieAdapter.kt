@@ -14,8 +14,12 @@ import com.fcadev.movieapp.R
 import com.fcadev.movieapp.databinding.FavoriteShowListRowBinding
 import com.fcadev.movieapp.service.local.FavoriteMovie
 import com.fcadev.movieapp.service.local.FavoriteMovieDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class FavoriteMovieAdapter(private var fragment: Fragment, private val favoriteMovie: List<FavoriteMovie>):
+class FavoriteMovieAdapter(private var fragment: Fragment, private var favoriteMovie: List<FavoriteMovie>):
     RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteViewHolder>(){
 
     val context = fragment.requireContext()
@@ -45,7 +49,7 @@ class FavoriteMovieAdapter(private var fragment: Fragment, private val favoriteM
         holder.binding.favoriteMovieName.text = showName
         holder.binding.notFavButton.setOnClickListener {
             removeFromFavorites(favoriteMovie[position])
-            Toast.makeText(context, "${showName} favorilerden kaldırıldı", Toast.LENGTH_LONG).show()
+
         }
 
     }
@@ -57,7 +61,15 @@ class FavoriteMovieAdapter(private var fragment: Fragment, private val favoriteM
     private fun removeFromFavorites(favoriteMovie: FavoriteMovie){
         val database = Room.databaseBuilder(context, FavoriteMovieDatabase::class.java, "favorite_movies_db").build()
         val favoriteMovieDao = database.favoriteMovieDao()
-        favoriteMovieDao.delete(favoriteMovie)
-        notifyDataSetChanged()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
+                favoriteMovieDao.delete(favoriteMovie)
+                val updateList = favoriteMovieDao.getAllFavoriteMovies()
+                this@FavoriteMovieAdapter.favoriteMovie = updateList
+            }
+            notifyDataSetChanged()
+        }
+        Toast.makeText(context, "İçerik favorilerden kaldırıldı", Toast.LENGTH_LONG).show()
     }
 }

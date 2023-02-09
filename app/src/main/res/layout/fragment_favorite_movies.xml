@@ -23,7 +23,6 @@ tools:context=".view.FavoriteMoviesFragment">
         android:id="@+id/favoriteShowListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-         />
+        android:layout_marginTop="35dp" />
 
 </RelativeLayout>
