@@ -1,5 +1,6 @@
 package com.fcadev.movieapp.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,11 @@ class TopRatedMoviesAdapter(private val topRatedMoviesList: ArrayList<TopRatedMo
 
         holder.binding.topRatedMoviesCardLayout.setOnClickListener {
             onItemClick?.invoke(topRatedMoviesList[position])
+
+            val bundle = Bundle()
+            bundle.putString("posterPath", topRatedMoviesList[position].poster_path)
+            bundle.putString("originalTitle", topRatedMoviesList[position].original_title)
+            bundle.putInt("id", topRatedMoviesList[position].id!!)
         }
 
     }

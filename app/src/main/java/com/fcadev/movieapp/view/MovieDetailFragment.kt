@@ -31,6 +31,7 @@ class MovieDetailFragment : Fragment() {
     private lateinit var favoriteMovieDao: FavoriteMovieDao
     private var existingMovie: FavoriteMovie? = null
     private lateinit var favoriteMovie: FavoriteMovie
+    private lateinit var favoriteMovieDatabase: FavoriteMovieDatabase
     //private lateinit var favoriteMovieModel : FavoriteMovie
 
 
@@ -48,7 +49,7 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val favoriteMovieDatabase = Room.databaseBuilder(requireContext(), FavoriteMovieDatabase::class.java, "favorite_movie_db")
+        favoriteMovieDatabase = Room.databaseBuilder(requireContext(), FavoriteMovieDatabase::class.java, "favorite_movie_db")
             .allowMainThreadQueries().build()
         favoriteMovieDao = favoriteMovieDatabase.favoriteMovieDao()
 

@@ -9,7 +9,24 @@
         android:id="@+id/homeFragment"
         android:name="com.fcadev.movieapp.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="originalName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="originalTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="posterPath"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/popularMoviesFragment"
         android:name="com.fcadev.movieapp.view.PopularMoviesFragment"

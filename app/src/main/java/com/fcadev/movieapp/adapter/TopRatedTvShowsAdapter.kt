@@ -40,6 +40,11 @@ class TopRatedTvShowsAdapter(private val topRatedTvShowsList: ArrayList<TopRated
 
         holder.binding.topRatedTvShowsCardLayout.setOnClickListener {
             onItemClick?.invoke(topRatedTvShowsList[position])
+
+            val bundle = Bundle()
+            bundle.putString("posterPath", topRatedTvShowsList[position].poster_path)
+            bundle.putString("originalTitle", topRatedTvShowsList[position].original_name)
+            bundle.putInt("id", topRatedTvShowsList[position].id!!)
         }
 
     }

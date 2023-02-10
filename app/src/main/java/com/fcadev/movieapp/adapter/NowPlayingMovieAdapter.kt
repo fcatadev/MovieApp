@@ -1,5 +1,6 @@
 package com.fcadev.movieapp.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,11 @@ class NowPlayingMovieAdapter(private val nowPlayingList : ArrayList<NowPlayingRe
 
         holder.binding.nowPlayingMovieCardLayout.setOnClickListener {
             onItemClick?.invoke(nowPlayingList[position])
+
+            val bundle = Bundle()
+            bundle.putInt("id", nowPlayingList[position].id!!)
+            bundle.putString("originalTitle", nowPlayingList[position].original_title)
+            bundle.putString("posterPath", nowPlayingList[position].poster_path)
         }
 
     }

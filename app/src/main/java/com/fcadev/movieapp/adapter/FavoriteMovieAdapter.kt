@@ -43,7 +43,7 @@ class FavoriteMovieAdapter(
             .centerCrop()
             .into(holder.binding.favoriteMovieImage)
 
-        val showName = if (favoriteMovieList[position].name != null){
+        val showName = if (favoriteMovieList[position].name != null && favoriteMovieList[position].name!!.length > 2){
             favoriteMovieList[position].name
         }else {
             favoriteMovieList[position].title
