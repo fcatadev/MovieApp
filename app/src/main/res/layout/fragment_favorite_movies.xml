@@ -26,18 +26,31 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favoriteShowHeader" />
+        app:layout_constraintTop_toBottomOf="@id/favoriteShowHeader"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivEmpty"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/cancel"
-        android:visibility="gone"
+        android:src="@drawable/outofstock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ivEmptyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorileriniz de içerik bulunmamaktadır"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/favoriteShowListRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEmpty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
